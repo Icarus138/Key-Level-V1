@@ -1,0 +1,57 @@
+# ================================================================
+# .github/workflows/daily.yml
+#
+# GitHub Actions — Mise à jour quotidienne des niveaux de marché
+# Lance update_levels.py chaque matin en semaine à 08h50 (Paris)
+# ================================================================
+
+name: Daily Market Data Update
+
+on:
+  # Cron UTC — Paris = UTC+1 hiver / UTC+2 été
+  # Heure d'hiver (CET)  : 06:50 UTC = 07:50 Paris  ← on vise 08:50
+  # Heure d'été  (CEST)  : 05:50 UTC = 07:50 Paris
+  # On utilise 06:50 UTC pour arriver à ~08:50 Paris en hiver
+  # (en été ça sera 08:50 CEST = 06:50 UTC aussi — parfait)
+  schedule:
+    - cron: '50 6 * * 1-5'   # Lun–Ven à 06:50 UTC ≈ 08:50 Paris
+
+  # Permet de déclencher manuellement depuis l'onglet "Actions" sur GitHub
+  workflow_dispatch:
+
+jobs:
+  update-market-data:
+    runs-on: ubuntu-latest
+    # Permission d'écrire dans le repo pour pouvoir committer
+    permissions:
+      contents: write
+
+    steps:
+      # 1. Cloner le repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Installer Python 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Installer les dépendances Python
+      - name: Install dependencies
+        run: |
+          pip install --quiet yfinance pytz
+
+      # 4. Lancer le script de mise à jour
+      - name: Run market data update
+        run: python update_levels.py
+
+      # 5. Committer et pousser si le fichier a changé
+      - name: Commit and push updated index.html
+        run: |
+          git config --global user.name  "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add index.html
+          # Ne committer que si index.html a réellement changé
+          git diff --staged --quiet || git commit -m "📊 Auto-update market data $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
