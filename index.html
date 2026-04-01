@@ -1058,6 +1058,13 @@ body {
       </div>
 
       <!-- Niveaux clés -->
+      <div class="levels-section">
+        <div class="levels-header">
+          <div class="section-label" style="margin:0">Niveaux clés actifs</div>
+          <button class="btn-add-level" data-asset="XAU">+ Ajouter</button>
+        </div>
+        <div class="levels-table" id="levels-XAU"></div>
+      </div>
 
       <!-- Note -->
       <textarea class="asset-note" data-field="note" data-asset="XAU" placeholder="Notes libres : contexte, invalidation, observations…" rows="2"></textarea>
@@ -1629,6 +1636,7 @@ function buildLevelTfOptions(selected) {
 
 function renderLevels(asset) {
   const container = document.getElementById('levels-' + asset);
+  if (!container) return; // ← null-safe : div absent = on ignore silencieusement
   const levels = state.assets[asset].levels;
 
   if (!levels.length) {
@@ -2159,122 +2167,7 @@ function applyMarketData() {
 
 <!-- MARKET_DATA:START -->
 <script id="auto-market-data">
-/* Auto — 2026-04-01 20:16 Paris */
-const AUTO_MARKET_DATA = {
-  "generated_date": "2026-04-01",
-  "generated_time": "20:16",
-  "assets": {
-    "XAU": {
-      "price": 4796.2,
-      "pdh": 4684.1,
-      "pdl": 4508.6,
-      "do": 4698.4,
-      "wo": 4482.8,
-      "mo": 4698.4,
-      "pwh": 4551.9,
-      "pwl": 4100.8,
-      "pmh": 5586.2,
-      "pml": 4314.4,
-      "asia_h": 4774.2,
-      "asia_l": 4571.8,
-      "london_h": 4816.2,
-      "london_l": 4558.9,
-      "ny_h": 4821.0,
-      "ny_l": 4597.8
-    },
-    "BTC": {
-      "price": 68110.0,
-      "pdh": 68495.0,
-      "pdl": 65950.0,
-      "do": 68224.0,
-      "wo": 65958.0,
-      "mo": 68224.0,
-      "pwh": 71986.0,
-      "pwl": 64972.0,
-      "pmh": 75988.0,
-      "pml": 64972.0,
-      "asia_h": 69204.0,
-      "asia_l": 66507.0,
-      "london_h": 69204.0,
-      "london_l": 65981.0,
-      "ny_h": 69105.0,
-      "ny_l": 66478.0
-    },
-    "SP5": {
-      "price": 6580.11,
-      "pdh": 6539.05,
-      "pdl": 6395.88,
-      "do": 6556.56,
-      "wo": 6403.37,
-      "mo": 6556.56,
-      "pwh": 6651.62,
-      "pwl": 6356.08,
-      "pmh": 6901.01,
-      "pml": 6316.91,
-      "asia_h": null,
-      "asia_l": null,
-      "london_h": 6606.0,
-      "london_l": 6395.88,
-      "ny_h": 6609.67,
-      "ny_l": 6395.88
-    },
-    "NAS": {
-      "price": 21844.98,
-      "pdh": 21642.62,
-      "pdl": 21063.38,
-      "do": 21742.79,
-      "wo": 21096.24,
-      "mo": 21742.79,
-      "pwh": 22189.34,
-      "pwl": 20909.93,
-      "pmh": 22906.72,
-      "pml": 20690.25,
-      "asia_h": null,
-      "asia_l": null,
-      "london_h": 21967.43,
-      "london_l": 21068.65,
-      "ny_h": 21982.54,
-      "ny_l": 21068.65
-    },
-    "WTI": {
-      "price": 99.66,
-      "pdh": 106.86,
-      "pdl": 99.62,
-      "do": 101.72,
-      "wo": 102.6,
-      "mo": 101.72,
-      "pwh": 101.67,
-      "pwl": 84.37,
-      "pmh": 66.48,
-      "pml": 55.76,
-      "asia_h": 103.45,
-      "asia_l": 96.5,
-      "london_h": 105.22,
-      "london_l": 96.5,
-      "ny_h": 105.04,
-      "ny_l": 98.23
-    },
-    "DXY": {
-      "price": 99.541,
-      "pdh": 100.64,
-      "pdl": 99.81,
-      "do": 99.785,
-      "wo": 100.22,
-      "mo": 99.785,
-      "pwh": 100.21,
-      "pwl": 98.88,
-      "pmh": 100.64,
-      "pml": 97.77,
-      "asia_h": 100.52,
-      "asia_l": 99.497,
-      "london_h": 100.55,
-      "london_l": 99.298,
-      "ny_h": 100.244,
-      "ny_l": 99.298
-    }
-  }
-};
-applyMarketData();
+/* Ce bloc est remplacé automatiquement chaque matin par GitHub Actions. */
 </script>
 <!-- MARKET_DATA:END -->
 </body>
